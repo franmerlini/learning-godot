@@ -34,3 +34,6 @@ func _on_spawn_timer_timeout() -> void:
 
 func _on_dice_off_screen() -> void:
 	pause_all()
+
+func _on_fox_point_scored() -> void:
+	pass # Replace with function body.
