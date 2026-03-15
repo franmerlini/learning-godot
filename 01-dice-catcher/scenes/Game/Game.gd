@@ -1,13 +1,19 @@
 extends Node2D
 
 const DICE = preload('res://Scenes/Dice/Dice.tscn')
+const GAME_OVER = preload("uid://eii2vgkwahql")
 
 @onready var spanw_timer: Timer = $SpawnTimer
+@onready var label: Label = $Label
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 const MARGIN: float = 80.0
 const STOPPABLE_GROUP_KEY: String = 'stoppable'
 
+var points: int = 0
+
 func _ready() -> void:
+	audio_stream_player_2d.play()
 	spanw_timer.start(2)
 	spawn_dice()
 
@@ -34,6 +40,10 @@ func _on_spawn_timer_timeout() -> void:
 
 func _on_dice_off_screen() -> void:
 	pause_all()
+	audio_stream_player_2d.stop()
+	audio_stream_player_2d.stream = GAME_OVER
+	audio_stream_player_2d.play()
 
 func _on_fox_point_scored() -> void:
-	pass # Replace with function body.
+	points += 1
+	label.text = "%04d" % points
