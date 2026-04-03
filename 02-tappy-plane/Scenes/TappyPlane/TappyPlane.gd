@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 const JUMP_POWER: float = 350
 
 var _gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -15,3 +17,9 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= JUMP_POWER
 		_jumped = false
 	move_and_slide()
+	if is_on_floor():
+		die()
+		
+func die() -> void:
+	set_physics_process(false)
+	animated_sprite_2d.stop()
